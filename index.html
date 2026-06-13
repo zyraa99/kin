@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KISHIN COMMUNITY</title>
+
+<!-- ========== FAVICON & PREVIEW (Open Graph) ========== -->
+<!-- Favicon untuk tab browser -->
+<link rel="icon" type="image/jpeg" href="https://athars.space/uploads/59fe0562.jpg">
+<link rel="apple-touch-icon" href="https://athars.space/uploads/59fe0562.jpg">
+
+<!-- Open Graph / Social Media Preview (WhatsApp, Telegram, Twitter, Facebook, dll) -->
+<meta property="og:title" content="KISHIN COMMUNITY">
+<meta property="og:description" content="Komunitas WhatsApp. Tempat berkumpul, berbagi, bertumbuh. Bergabung sekarang!">
+<meta property="og:image" content="https://athars.space/uploads/59fe0562.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
+<meta property="og:url" content="https://kishin.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KISHIN COMMUNITY">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KISHIN COMMUNITY">
+<meta name="twitter:description" content="Komunitas WhatsApp. Tempat berkumpul, berbagi, bertumbuh.">
+<meta name="twitter:image" content="https://athars.space/uploads/59fe0562.jpg">
+
+<!-- Fonts & Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --red:    #e8192c;
+  --red-2:  #ff3347;
+  --red-dim: rgba(232,25,44,0.12);
+  --bg:     #0a0a0a;
+  --bg-2:   #111111;
+  --bg-3:   #1a1a1a;
+  --text:   #f0f0f0;
+  --text-2: #aaa;
+  --text-3: #666;
+  --border: rgba(255,255,255,0.07);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* ── TEXTURE & NOISE ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.35;
+  mix-blend-mode: overlay;
+}
+
+body::after {
+  content:'';
+  position:fixed;inset:0;
+  background: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 8px);
+  pointer-events:none;
+  z-index: 9998;
+}
+
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjUiIG51bU9jdGF2ZXM9IjMiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMDYiLz48L3N2Zz4=');
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.18;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px;
+  background:linear-gradient(to bottom,rgba(10,10,10,0.95),transparent);
+  backdrop-filter:blur(4px);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:0.1em;
+  color:var(--text);
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-2);
+  text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--red)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  text-align:center;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%, rgba(232,25,44,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 80%, rgba(232,25,44,0.04) 0%, transparent 60%);
+}
+.hero-scan{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.06) 3px, rgba(0,0,0,0.06) 4px);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:1;padding:0 24px;}
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.3em;
+  color:var(--red);text-transform:uppercase;margin-bottom:24px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{
+  content:'';display:block;width:40px;height:1px;background:var(--red);opacity:0.4;
+}
+.hero-icon-wrapper {
+  display: flex;justify-content: center;align-items: center;margin-bottom: 28px;
+  animation: float-icon 3s ease-in-out infinite;
+}
+.hero-icon {
+  width: 110px;height: 110px;object-fit: cover;border-radius: 18px;
+  border: 2px solid var(--red);box-shadow: 0 0 16px rgba(232,25,44,0.25);
+  transition: transform 0.2s ease;
+}
+.hero-icon:hover { transform: scale(1.02); }
+@keyframes float-icon { 0% { transform: translateY(0px); } 50% { transform: translateY(-4px); } 100% { transform: translateY(0px); } }
+
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,140px);
+  line-height:0.9;letter-spacing:0.02em;color:var(--text);margin-bottom:8px;
+}
+.hero-title .slash{color:var(--red);text-shadow:0 0 15px rgba(232,25,44,0.25);}
+.hero-sub{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,4vw,36px);
+  letter-spacing:0.25em;color:var(--text-2);margin-bottom:40px;
+}
+.hero-stats{
+  display:inline-flex;align-items:center;gap:0;border:1px solid var(--border);
+  border-radius:4px;overflow:hidden;margin-bottom:48px;background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(2px);
+}
+.hero-stat{padding:14px 28px;border-right:1px solid var(--border);text-align:center;}
+.hero-stat:last-child{border-right:none}
+.hero-stat-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--red);display:block;line-height:1;}
+.hero-stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase;margin-top:4px;display:block;}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  padding:13px 32px;background:var(--red);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+  border:none;border-radius:2px;cursor:pointer;text-decoration:none;
+  transition:background .2s,transform .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.btn-primary i { font-size: 14px; }
+.btn-primary:hover{background:var(--red-2);transform:translateY(-1px);}
+.btn-ghost{
+  padding:13px 32px;background:transparent;border:1px solid rgba(255,255,255,0.15);
+  color:var(--text-2);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.12em;
+  text-transform:uppercase;border-radius:2px;cursor:pointer;text-decoration:none;
+  transition:border-color .2s,color .2s;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.btn-ghost i { font-size: 14px; }
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.3em;color:var(--text-3);
+  text-transform:uppercase;animation:bounce-fade 2s infinite;
+}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--red));}
+
+/* ── ABOUT (NILAI INTI + WARNA) ── */
+.about{
+  padding:120px 40px;
+  max-width:1100px;margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.about-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.about-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(40px,5vw,64px);
+  letter-spacing:0.04em;
+  line-height:1;
+  margin-bottom:24px;
+}
+.about-title em{color:var(--red);font-style:normal}
+.about-body{
+  font-size:15px;
+  line-height:1.9;
+  color:var(--text-2);
+}
+.about-body p+p{margin-top:16px}
+
+.about-visual{position:relative;}
+.about-card{
+  background:var(--bg-2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+}
+.about-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+.about-card-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;
+  letter-spacing:0.2em;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:28px;
+  text-align:center;
+}
+.pillar-list{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  list-style:none;
+}
+.pillar-item{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:18px;
+  background:linear-gradient(135deg, rgba(232,25,44,0.05) 0%, rgba(0,0,0,0.2) 100%);
+  border:1px solid rgba(232,25,44,0.2);
+  border-radius:10px;
+  transition:all 0.25s ease;
+}
+.pillar-item:hover{
+  border-color:rgba(232,25,44,0.5);
+  background:linear-gradient(135deg, rgba(232,25,44,0.1) 0%, rgba(0,0,0,0.3) 100%);
+  transform:translateX(4px);
+}
+.pillar-icon{
+  width:44px;
+  height:44px;
+  flex-shrink:0;
+  background:var(--red-dim);
+  border:1px solid rgba(232,25,44,0.3);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  color:var(--red);
+}
+.pillar-text h4{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:6px;
+  color:var(--text);
+  letter-spacing:0.02em;
+}
+.pillar-text p{
+  font-size:12px;
+  color:var(--text-2);
+  line-height:1.5;
+}
+
+/* ── RULES ── */
+.rules{padding:100px 40px;background:var(--bg-2);position:relative;overflow:hidden;}
+.rules::before{content:'KISHIN';position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;font-size:320px;line-height:1;color:rgba(232,25,44,0.02);pointer-events:none;user-select:none;white-space:nowrap;}
+.rules-inner{max-width:900px;margin:0 auto}
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.3em;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(36px,5vw,60px);
+  letter-spacing:0.04em;
+  margin-bottom:48px;
+  color:var(--text);
+}
+.rules-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+.rule-item{
+  background:var(--bg-2);
+  padding:28px;
+  transition:background .2s;
+  position:relative;
+}
+.rule-item:hover{background:rgba(232,25,44,0.04)}
+.rule-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;
+  line-height:1;
+  color:rgba(232,25,44,0.2);
+  margin-bottom:12px;
+  display:block;
+}
+.rule-title{
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:8px;
+  letter-spacing:0.02em;
+  color:var(--red);
+}
+.rule-desc{
+  font-size:12px;
+  color:var(--text-2);
+  line-height:1.7;
+}
+
+/* ── GROUPS ── */
+.groups{padding:100px 40px;max-width:1100px;margin:0 auto;}
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;margin-top:48px;margin-bottom:40px;}
+.group-card{
+  background:linear-gradient(145deg, #121212 0%, #0c0c0c 100%);
+  border:1px solid rgba(232,25,44,0.2);
+  border-radius:12px;
+  padding:28px 20px;
+  text-align:center;
+  transition:all 0.25s ease;
+  cursor:default;
+}
+.group-card:hover{
+  border-color:rgba(232,25,44,0.5);
+  transform:translateY(-4px);
+  background:linear-gradient(145deg, #181818 0%, #0f0f0f 100%);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+.group-icon {
+  font-size: 42px;
+  color: var(--red);
+  margin-bottom: 16px;
+  display: block;
+}
+.group-name{
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.group-type{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ── MUSIC PLAYER (dipindah ke bawah group) ── */
+.music-player-section {
+  max-width: 1100px;
+  margin: 0 auto 60px auto;
+  padding: 0 20px;
+}
+.music-player {
+  background: rgba(17,17,17,0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(232,25,44,0.35);
+  border-radius: 60px;
+  padding: 10px 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
+  width: auto;
+}
+.music-player:hover {
+  border-color: rgba(232,25,44,0.6);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
+.player-btn {
+  background: var(--red);
+  border: none;
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.player-btn:hover {
+  background: var(--red-2);
+  transform: scale(1.04);
+}
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.volume-icon {
+  color: var(--text-2);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.volume-icon:hover {
+  color: var(--red);
+}
+.volume-slider {
+  width: 100px;
+  height: 4px;
+  -webkit-appearance: none;
+  background: var(--border);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--red);
+  cursor: pointer;
+}
+.now-playing {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  background: rgba(232,25,44,0.15);
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-weight: bold;
+}
+.music-player-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+@media (max-width: 640px) {
+  .music-player { padding: 8px 18px; gap: 12px; }
+  .volume-slider { width: 70px; }
+  .player-btn { width: 38px; height: 38px; font-size: 16px; }
+  .now-playing { font-size: 9px; padding: 4px 10px; }
+}
+
+/* ── JOIN ── */
+.join{padding:120px 40px;text-align:center;position:relative;overflow:hidden;}
+.join::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(232,25,44,0.05),transparent);}
+.join-content{position:relative;z-index:1}
+.join-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,8vw,100px);
+  line-height:1;
+  letter-spacing:0.02em;
+  margin-bottom:20px;
+  color:var(--text);
+}
+.join-title span{color:var(--red)}
+.join-sub{
+  font-size:15px;
+  color:var(--text-2);
+  max-width:500px;
+  margin:0 auto 40px;
+  line-height:1.8;
+}
+.join-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── FOOTER ── */
+footer{padding:40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.1em;color:var(--text-2);}
+.footer-logo span{color:var(--red)}
+.footer-copy{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);letter-spacing:0.08em;}
+.footer-badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-3);display:flex;align-items:center;gap:8px;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s infinite;}
+
+@keyframes bounce-fade{0%,100%{opacity:.4;transform:translateX(-50%) translateY(0)}50%{opacity:.7;transform:translateX(-50%) translateY(5px)}}
+@keyframes pulse{0%,100%{opacity:0.8}50%{opacity:0.4}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .about{grid-template-columns:1fr;gap:48px;padding:80px 20px}
+  .rules{padding:80px 20px}
+  .groups{padding:80px 20px}
+  .groups-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .join{padding:80px 20px}
+  footer{padding:24px 20px}
+  .hero-stat{padding:12px 18px}
+  .hero-icon { width: 85px; height: 85px; border-radius: 14px; }
+  .group-icon { font-size: 34px; }
+  .group-card { padding: 20px 16px; }
+  .pillar-item { padding: 14px; }
+  .pillar-icon { width: 38px; height: 38px; font-size: 18px; }
+  .btn-primary, .btn-ghost { padding: 10px 22px; font-size: 11px; }
+  .music-player-section { margin-bottom: 40px; }
+}
+@media(prefers-reduced-motion:reduce){ *{animation-duration:.01ms!important;transition-duration:.01ms!important} }
+</style>
+</head>
+<body>
+<div class="grain-overlay"></div>
+
+<nav>
+  <div class="nav-logo">KISHIN <span>||</span> COMMUNITY</div>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#rules">Aturan</a></li>
+    <li><a href="#groups">Grup</a></li>
+    <li><a href="#join">Bergabung</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-content">
+    <div class="hero-icon-wrapper"><img class="hero-icon" src="https://athars.space/uploads/59fe0562.jpg" alt="Kishin Community Icon" crossorigin="anonymous"></div>
+    <div class="hero-eyebrow">Komunitas WhatsApp</div>
+    <h1 class="hero-title">KISHIN <span class="slash"></span><br>COMMUNITY</h1>
+    <p class="hero-sub">Tempat Berkumpul, Berbagi, Bertumbuh</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">Grup Aktif</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">50+</span><span class="hero-stat-label">Media</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">E2E</span><span class="hero-stat-label">Enkripsi</span></div>
+    </div>
+    <div class="hero-cta"><a href="#join" class="btn-primary">Bergabung Sekarang</a><a href="#about" class="btn-ghost">Kenali Kami</a></div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<!-- ABOUT - NILAI INTI DENGAN WARNA MERAH YANG KUAT -->
+<section id="about" class="about reveal">
+  <div>
+    <div class="about-label">Siapa Kami</div>
+    <h2 class="about-title">Lebih dari<br>Sekadar <em>Grup</em></h2>
+    <div class="about-body">
+      <p>KISHIN || COMMUNITY adalah komunitas berbasis WhatsApp yang dibangun di atas nilai kebersamaan, kreativitas, dan saling mendukung. Bukan sekadar kumpulan chat — ini adalah ruang di mana setiap anggota punya suara.</p>
+      <p>Dengan grup aktif dan ratusan anggota, KISHIN terus berkembang menjadi salah satu komunitas paling dinamis di platform ini. Semua percakapan terlindungi enkripsi end-to-end.</p>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-card">
+      <div class="about-card-title"><i class="fas fa-gem" style="margin-right: 8px;"></i> Nilai Inti</div>
+      <ul class="pillar-list">
+        <li class="pillar-item">
+          <div class="pillar-icon"><i class="fas fa-handshake"></i></div>
+          <div class="pillar-text">
+            <h4>Solidaritas</h4>
+            <p>Saling mendukung antar anggota tanpa syarat.</p>
+          </div>
+        </li>
+        <li class="pillar-item">
+          <div class="pillar-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="pillar-text">
+            <h4>Aman & Privat</h4>
+            <p>Seluruh komunikasi terenkripsi end-to-end.</p>
+          </div>
+        </li>
+        <li class="pillar-item">
+          <div class="pillar-icon"><i class="fas fa-bolt"></i></div>
+          <div class="pillar-text">
+            <h4>Aktif & Dinamis</h4>
+            <p>3 grup dengan topik beragam, update setiap hari.</p>
+          </div>
+        </li>
+        <li class="pillar-item">
+          <div class="pillar-icon"><i class="fas fa-bullseye"></i></div>
+          <div class="pillar-text">
+            <h4>Fokus & Terarah</h4>
+            <p>Tiap grup punya tujuan yang jelas dan moderator aktif.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules" class="rules"><div class="rules-inner"><div class="section-label">Aturan Main</div><h2 class="section-title reveal">Pegang Prinsip,<br>Jaga Komunitas</h2><div class="rules-grid reveal"><div class="rule-item"><span class="rule-num">01</span><h3 class="rule-title">Hormati Sesama</h3><p class="rule-desc">Tidak ada tempat untuk ujaran kebencian, diskriminasi, atau perundungan dalam komunitas ini.</p></div><div class="rule-item"><span class="rule-num">02</span><h3 class="rule-title">Konten Relevan</h3><p class="rule-desc">Kirim konten yang sesuai dengan topik grup. Spam dan konten tidak relevan akan dihapus.</p></div><div class="rule-item"><span class="rule-num">03</span><h3 class="rule-title">Jaga Privasi</h3><p class="rule-desc">Dilarang membagikan informasi pribadi anggota lain tanpa izin eksplisit.</p></div><div class="rule-item"><span class="rule-num">04</span><h3 class="rule-title">Gunakan Bahasa Santun</h3><p class="rule-desc">Komunikasi yang sopan adalah fondasi diskusi yang sehat dan produktif.</p></div><div class="rule-item"><span class="rule-num">05</span><h3 class="rule-title">Ikuti Moderator</h3><p class="rule-desc">Keputusan admin dan moderator bersifat final demi menjaga ketertiban komunitas.</p></div><div class="rule-item"><span class="rule-num">06</span><h3 class="rule-title">Zero Toleransi</h3><p class="rule-desc">Pelanggaran berat berakibat pengeluaran permanen tanpa peringatan lebih lanjut.</p></div></div></div></section>
+
+<!-- GROUPS -->
+<section id="groups" class="groups">
+  <div class="section-label">Jaringan Grup</div>
+  <h2 class="section-title reveal">Grup,<br>Komunitas</h2>
+  <div class="groups-grid reveal">
+    <div class="group-card">
+      <i class="fas fa-bullhorn group-icon"></i>
+      <div class="group-name">Pengumuman</div>
+      <div class="group-type">Official Channel</div>
+    </div>
+    <div class="group-card">
+      <i class="fas fa-users group-icon"></i>
+      <div class="group-name">𝗞𝗜𝗦𝗛𝗜𝗡 𝗙𝗔𝗠𝗜𝗟𝗬 𝗚𝗘𝗡 1</div>
+      <div class="group-type">𝗚𝗘𝗡 𝟭</div>
+    </div>
+    <div class="group-card">
+      <i class="fas fa-user-friends group-icon"></i>
+      <div class="group-name">𝗞𝗜𝗦𝗛𝗜𝗡 𝗙𝗔𝗠𝗜𝗟𝗬 𝗚𝗘𝗡 2</div>
+      <div class="group-type">𝗚𝗘𝗡 2</div>
+    </div>
+    <div class="group-card">
+      <i class="fas fa-robot group-icon"></i>
+      <div class="group-name">Group Bot</div>
+      <div class="group-type">Bot & Automation</div>
+    </div>
+  </div>
+  
+  <!-- MUSIC PLAYER DI BAWAH GROUP BOT -->
+  <div class="music-player-section reveal">
+    <div class="music-player-wrapper">
+      <div class="music-player" id="musicPlayer">
+        <button class="player-btn" id="playPauseBtn" aria-label="Play/Pause">
+          <i class="fas fa-play" id="playIcon"></i>
+        </button>
+        <div class="volume-container">
+          <span class="volume-icon" id="volumeIcon"><i class="fas fa-volume-up"></i></span>
+          <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
+        </div>
+        <div class="now-playing">Zyraa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN dengan Ikon Font Awesome -->
+<section id="join" class="join reveal">
+  <div class="join-content">
+    <h2 class="join-title">READY TO<br><span>JOIN</span> US?</h2>
+    <p class="join-sub">Jadilah bagian dari komunitas yang terus berkembang. Satu langkah kecil, satu komunitas besar.</p>
+    <div class="join-buttons">
+      <a href="https://whatsapp.com/channel/0029VbB23f15a240CU6QX52L" target="_blank" rel="noopener" class="btn-primary">
+        <i class="fab fa-whatsapp"></i> Ikuti Channel
+      </a>
+      <a href="https://chat.whatsapp.com/II9rgx8uTEqFqZ00H991OC?s=cl&p=a&mlu=1" target="_blank" rel="noopener" class="btn-ghost">
+        <i class="fas fa-user-check"></i> Seleksi
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">KISHIN <span>||</span> COMMUNITY</div>
+  <div class="footer-copy"></div>
+  <div class="footer-badge"><span class="badge-dot"></span> kishin</div>
+</footer>
+
+<script>
+  (function() {
+    const audio = new Audio("https://athars.space/uploads/decce450.aac");
+    audio.loop = true;
+    audio.volume = 0.7;
+    audio.preload = "auto";
+    
+    let isPlaying = false;
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const playIcon = document.getElementById("playIcon");
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeIcon = document.getElementById("volumeIcon");
+    
+    function updateUI() {
+      playIcon.className = isPlaying ? "fas fa-pause" : "fas fa-play";
+    }
+    
+    function playMusic() {
+      audio.play().then(() => {
+        isPlaying = true;
+        updateUI();
+      }).catch(err => {
+        console.log("Play error:", err);
+        isPlaying = false;
+        updateUI();
+      });
+    }
+    
+    function pauseMusic() {
+      audio.pause();
+      isPlaying = false;
+      updateUI();
+    }
+    
+    playPauseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (isPlaying) pauseMusic();
+      else playMusic();
+    });
+    
+    volumeSlider.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value);
+      audio.volume = val;
+      if (val === 0) volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      else if (val < 0.4) volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
+      else volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+    });
+    
+    volumeIcon.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (audio.volume > 0) {
+        audio.volume = 0;
+        volumeSlider.value = 0;
+        volumeIcon.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      } else {
+        audio.volume = 0.7;
+        volumeSlider.value = 0.7;
+        volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+    });
+    
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+    
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.background = window.scrollY > 60 ? 'rgba(10,10,10,0.97)' : 'linear-gradient(to bottom,rgba(10,10,10,0.95),transparent)';
+    });
+  })();
+</script>
+</body>
+</html>
